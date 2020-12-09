@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
-import { PxbAuthConfig } from '@pxblue/angular-auth-workflow';
+import { PxbAuthConfig } from '@daileytj/angular-auth-workflow';
 
 @Component({
     selector: 'app-auth',

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { PxbChangePasswordDialogService, AUTH_ROUTE, PxbAuthSecurityService } from '@pxblue/angular-auth-workflow';
+import { PxbChangePasswordDialogService, AUTH_ROUTE, PxbAuthSecurityService } from '@daileytj/angular-auth-workflow';
 
 @Component({
     selector: 'app-home',

@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { Injectable } from '@angular/core';
-import { IPxbRegisterUIService, PxbAuthSecurityService, PxbAuthConfig } from '@pxblue/angular-auth-workflow';
+import { IPxbRegisterUIService, PxbAuthSecurityService, PxbAuthConfig } from '@daileytj/angular-auth-workflow';
 import { SAMPLE_EULA } from '../constants/sampleEula';
 
 const TIMEOUT_MS = 1500;

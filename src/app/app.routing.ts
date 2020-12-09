@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { authSubRoutes, PxbAuthGuard, AUTH_ROUTE } from '@pxblue/angular-auth-workflow';
+import { authSubRoutes, PxbAuthGuard, AUTH_ROUTE } from '@daileytj/angular-auth-workflow';
 import { HomeComponent } from './pages/home/home.component';
 import { AuthComponent } from './pages/auth/auth.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 const routes: Routes = [
     { path: '', redirectTo: AUTH_ROUTE, pathMatch: 'full' },
@@ -13,7 +12,6 @@ const routes: Routes = [
         canActivate: [PxbAuthGuard],
         children: [
             { path: 'home', component: HomeComponent },
-            { path: 'dashboard', component: DashboardComponent },
         ],
     },
 ];
