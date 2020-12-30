@@ -1,10 +1,11 @@
 /* eslint-disable no-console */
 import { Injectable } from '@angular/core';
-import { IPxbRegisterUIService, PxbAuthSecurityService, PxbAuthConfig } from '@daileytj/angular-auth-workflow';
+import { IPxbRegisterUIService, PxbAuthSecurityService, PxbAuthConfig } from '@pxblue/angular-auth-workflow';
 import { SAMPLE_EULA } from '../constants/sampleEula';
+import { FormControl } from '@angular/forms';
 
+export const randomFailure = () => Math.random() < 0.25;
 const TIMEOUT_MS = 1500;
-
 @Injectable({
     providedIn: 'root',
 })
@@ -23,16 +24,14 @@ export class RegisterUIService implements IPxbRegisterUIService {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 if (
-                    registrationCode ||
+                    !registrationCode ||
                     registrationCode.toUpperCase() === 'INVALID_LINK' ||
                     registrationCode.toUpperCase() === 'FAIL'
                 ) {
-                    console.log('Resolving link validation request; user registration is not good!');
                     return reject();
                 }
-                console.log('User registration is not good!');
                 return resolve();
-            }, 10000);
+            }, TIMEOUT_MS);
         });
     }
 
@@ -43,10 +42,9 @@ export class RegisterUIService implements IPxbRegisterUIService {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 if (registrationCode && registrationCode.toUpperCase() === 'EULA_FAIL') {
-                  return reject();
+                    return reject();
                 }
-                const randomFailure = Math.random() > 0.8;
-                if (randomFailure) {
+                if (randomFailure()) {
                     return reject();
                 } else {
                     const eula = SAMPLE_EULA;
@@ -72,19 +70,26 @@ export class RegisterUIService implements IPxbRegisterUIService {
     }
 
     completeRegistration(
-        firstName: string,
-        lastName: string,
-        phoneNumber: string,
+        formControls: FormControl[],
         password: string,
         validationCode?: string,
         email?: string
     ): Promise<void> {
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlCode = urlParams.get('code');
+        if (!validationCode) {
+            validationCode = urlCode;
+        }
+        const firstName = formControls[0]?.value;
+        const lastName = formControls[1]?.value;
+        const country = formControls[2]?.value;
+        const phoneNumber = formControls[3]?.value;
         console.log(
-            `Performing a sample CompleteRegistration request with the following credentials:\n firstName: ${firstName}\n lastName: ${lastName}\n phoneNumber: ${phoneNumber}\n password: ${password}\n validationCode: ${validationCode}\n email: ${email}`
+            `Performing a sample CompleteRegistration request with the following credentials:\n firstName: ${firstName}\n lastName: ${lastName}\n country: ${country}\n phoneNumber: ${phoneNumber}\n password: ${password}\n validationCode: ${validationCode}\n email: ${email}`
         );
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                if (firstName.toUpperCase() === 'FAIL' || lastName.toUpperCase() === 'FAIL') {
+                if (firstName && firstName.toUpperCase() === 'FAIL') {
                     return reject();
                 }
                 this._pxbSecurityService.updateSecurityState({ email: 'sample-email@test.com' });
