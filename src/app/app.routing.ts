@@ -8,7 +8,7 @@ import {
   PxbForgotPasswordComponent,
   PxbCreateAccountComponent,
   PxbContactSupportComponent,
-  PxbCreateAccountInviteComponent
+  PxbCreateAccountInviteComponent, getAuthSubRoutes
 } from '@pxblue/angular-auth-workflow';
 import { HomeComponent } from './pages/home/home.component';
 import { AuthComponent } from './pages/auth/auth.component';
@@ -17,6 +17,7 @@ import { AuthComponent } from './pages/auth/auth.component';
 AUTH_ROUTES.AUTH_WORKFLOW = 'auth';
 AUTH_ROUTES.CONTACT_SUPPORT = 'assistance';
 
+const authWorkflowRoutes = getAuthSubRoutes();
 /*
 Non-ivy projects who desire route-name customization will have to declare their own routes.
 const authWorkflowRoutes = [
